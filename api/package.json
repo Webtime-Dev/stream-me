@@ -4,11 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pretty": "prettier --check \"./**/*.{ts,tsx,js,jsx}\"",
+    "check-ts": "tsc",
+    "lint": "eslint \"./**/*.{ts,tsx,js}\" --fix"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn check-ts"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,csgis,md}": [
+      "prettier --config ./.prettierrc --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint -c ./.eslintrc.js --fix"
+    ]
+  },
   "dependencies": {
     "@typegoose/typegoose": "^7.4.8",
     "connect-mongo": "^3.2.0",
