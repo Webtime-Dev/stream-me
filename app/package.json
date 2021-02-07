@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "pretty": "prettier --check \"./**/*.{ts,tsx,js,jsx}\"",
+    "check-ts": "tsc",
+    "lint": "eslint \"./**/*.{ts,tsx,js}\" --fix"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +19,37 @@
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn check-ts"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,json,csgis,md}": [
+      "prettier --config ./.prettierrc --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint -c ./.eslintrc.js --fix"
+    ]
+  },
   "devDependencies": {
     "@types/node": "^14.14.25",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prefer-arrow": "^1.2.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "husky": "^4.3.0",
+    "lint-staged": "^10.5.2",
+    "prettier": "^2.2.0",
     "typescript": "^4.1.3"
   }
 }
